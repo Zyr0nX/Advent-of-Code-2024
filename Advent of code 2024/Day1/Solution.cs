@@ -7,16 +7,17 @@ public class Solution : SolutionBase
 {
     public override string Part1Solver()
     {
-        const int n = 1000;
+        var n = Input.Length;
         var leftList = new int[n];
         var rightList = new int[n];
 
         var i = 0;
-        foreach (var line in Input.AsSpan().EnumerateLines())
+        foreach (var line in Input)
         {
-            var whitespaceIdx = line.IndexOf(' ');
-            var left = int.Parse(line[..whitespaceIdx]);
-            var right = int.Parse(line[(whitespaceIdx + 3)..]);
+            var lineSpan = line.AsSpan();
+            var whitespaceIdx = lineSpan.IndexOf(' ');
+            var left = int.Parse(lineSpan[..whitespaceIdx]);
+            var right = int.Parse(lineSpan[(whitespaceIdx + 3)..]);
             
             leftList[i] = left;
             rightList[i] = right;
@@ -36,29 +37,32 @@ public class Solution : SolutionBase
 
     public override string Part2Solver()
     {
-        var rightFreq = new Dictionary<int, int>(1000);
-        
-        foreach (var line in Input.AsSpan().EnumerateLines())
+        var n = Input.Length;
+        var rightFreq = new Dictionary<int, int>(n);
+        var spanRightFreq = rightFreq.GetAlternateLookup<ReadOnlySpan<char>>();
+        foreach (var line in Input)
         {
-            var whitespaceIdx = line.IndexOf(' ');
-            var right = int.Parse(line[(whitespaceIdx + 3)..]);
+            var lineSpan = line.AsSpan();
+            var whitespaceIdx = lineSpan.IndexOf(' ');
+            var right = lineSpan[(whitespaceIdx + 3)..];
 
-            if (!rightFreq.TryAdd(right, 1))
+            if (!spanRightFreq.TryAdd(right, 1))
             {
-                rightFreq[right] += 1;
+                spanRightFreq[right] += 1;
             }
         }
 
         var res = 0;
-        
-        foreach (var line in Input.AsSpan().EnumerateLines())
-        {
-            var whitespaceIdx = line.IndexOf(' ');
-            var left = int.Parse(line[..whitespaceIdx]);
 
-            if (rightFreq.TryGetValue(left, out var freq))
+        foreach (var line in Input)
+        {
+            var lineSpan = line.AsSpan();
+            var whitespaceIdx = lineSpan.IndexOf(' ');
+            var left = lineSpan[..whitespaceIdx];
+
+            if (spanRightFreq.TryGetValue(left, out var freq))
             {
-                res += left * freq;
+                res += int.Parse(left) * freq;
             }
         }
 

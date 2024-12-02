@@ -1,17 +1,19 @@
-﻿namespace Advent_of_code_2024;
+﻿using System.Text;
+
+namespace Advent_of_code_2024;
 
 public abstract class SolutionBase
 {
     public int Day { get; init; }
 
-    public string Input => LoadInput();
+    protected string[] Input => LoadInput();
 
-    public string LoadInput()
+    private string[] LoadInput()
     {
         var inputLocation = $"./Day{Day}/input";
-        return File.ReadAllText(inputLocation);
+        return File.ReadLines(inputLocation).ToArray();
     }
-
+    
     public IEnumerable<string> Solve()
     {
         yield return Part1Solver();
