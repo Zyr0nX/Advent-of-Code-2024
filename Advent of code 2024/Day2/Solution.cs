@@ -1,26 +1,25 @@
-﻿namespace Advent_of_code_2024.Day2;
+﻿namespace Advent_of_code_2024;
 
-public class Solution : SolutionBase
+public class SolutionDay2() : SolutionBase(2)
 {
     public override string Part1Solver()
     {
         var res = 0;
 
-        foreach (var line in Input)
+        foreach (var line in Input.AsSpan().EnumerateLines())
         {
-            var lineSpan = line.AsSpan();
             int? prevLevel = null;
             int? currLevel = null;
             bool? isIncreasing = null;
             var isSafe = true;
-            foreach (var levelRange in lineSpan.Split(' '))
+            foreach (var levelRange in line.Split(' '))
             {
                 if (currLevel is not null)
                 {
                     prevLevel = currLevel;
                 }
 
-                currLevel = int.Parse(lineSpan[levelRange]);
+                currLevel = int.Parse(line[levelRange]);
 
                 if (prevLevel is null) continue;
                 
@@ -33,17 +32,10 @@ public class Solution : SolutionBase
 
                 isIncreasing ??= diff > 0;
 
-                if (isIncreasing == true && diff < 0)
-                {
-                    isSafe = false;
-                    break;
-                }
+                if ((isIncreasing != true || !(diff < 0)) && (isIncreasing != false || !(diff > 0))) continue;
                     
-                if (isIncreasing == false && diff > 0)
-                {
-                    isSafe = false;
-                    break;
-                }
+                isSafe = false;
+                break;
             }
 
             if (isSafe)
@@ -59,16 +51,15 @@ public class Solution : SolutionBase
     {
         var res = 0;
 
-        foreach (var line in Input)
+        foreach (var line in Input.AsSpan().EnumerateLines())
         {
-            var lineSpan = line.AsSpan();
-            foreach (var levelRangeSkip in lineSpan.Split(' '))
+            foreach (var levelRangeSkip in line.Split(' '))
             {
                 int? prevLevel = null;
                 int? currLevel = null;
                 bool? isIncreasing = null;
                 var isSafe = true;
-                foreach (var levelRange in lineSpan.Split(' '))
+                foreach (var levelRange in line.Split(' '))
                 {
                     if (levelRange.Equals(levelRangeSkip))
                     {
@@ -79,7 +70,7 @@ public class Solution : SolutionBase
                         prevLevel = currLevel;
                     }
 
-                    currLevel = int.Parse(lineSpan[levelRange]);
+                    currLevel = int.Parse(line[levelRange]);
 
                     if (!prevLevel.HasValue) continue;
                 

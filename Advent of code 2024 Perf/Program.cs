@@ -3,4 +3,4 @@
 using Advent_of_code_2024_Perf;
 using BenchmarkDotNet.Running;
 
-var summary = BenchmarkRunner.Run<Day1Benchmark>();
+var summary = BenchmarkRunner.Run<Benchmark>();
