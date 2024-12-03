@@ -59,9 +59,9 @@ public partial class SolutionDay3() : SolutionBase(3)
         return res.ToString();
     }
 
-    [GeneratedRegex(@"(mul\(\d+,\d+\))")]
+    [GeneratedRegex(@"mul\(\d+,\d+\)")]
     private static partial Regex Part1MulRegex();
     
-    [GeneratedRegex(@"(mul\(\d+,\d+\))|do\(\)|don't\(\)")]
+    [GeneratedRegex(@"mul\(\d+,\d+\)|do\(\)|don't\(\)")]
     private static partial Regex Part2MulRegex();
 }
