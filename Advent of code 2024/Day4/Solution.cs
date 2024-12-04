@@ -49,14 +49,20 @@ public class SolutionDay4() : SolutionBase(4)
         for (var i = rowLength; i < Input.Length - rowLength; i++)
         {
             if (Input[i] != 'A') continue;
-            
+
             var topLeft = i - rowLength - 1;
             var topRight = i - rowLength + 1;
             var bottomLeft = i + rowLength - 1;
             var bottomRight = i + rowLength + 1;
-
-            if ((Input[topLeft] ^ Input[bottomRight]) == ('M' ^ 'S') ||
-                (Input[topRight] ^ Input[bottomLeft]) == ('M' ^ 'S'))
+            
+            if ((Input[topLeft] != 'M' ||
+                 Input[bottomRight] != 'S') &&
+                (Input[topLeft] != 'S' ||
+                 Input[bottomRight] != 'M') ||
+                (Input[topRight] != 'M' ||
+                 Input[bottomLeft] != 'S') &&
+                (Input[topRight] != 'S' ||
+                 Input[bottomLeft] != 'M'))
             {
                 continue;
             }
