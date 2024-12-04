@@ -5,29 +5,33 @@ public class SolutionDay4() : SolutionBase(4)
     public override string Part1Solver()
     {
         var m = Input.IndexOf(Environment.NewLine, StringComparison.Ordinal);
-        var rowLength = m + Environment.NewLine.Length;
+        Span<char> xmas = ['X', 'M', 'A', 'S'];
+        Span<int> directions = 
+        [
+            -m - Environment.NewLine.Length - 1, -m - Environment.NewLine.Length, -m - Environment.NewLine.Length + 1,
+            -1, 1,
+            m + Environment.NewLine.Length - 1, m + Environment.NewLine.Length, m + Environment.NewLine.Length + 1
+        ];
         var res = 0;
         for (var i = 0; i < Input.Length; i++)
         {
-            for (var dy = -1; dy <= 1; dy++)
+            foreach (var direction in directions)
             {
-                for (var dx = -1; dx <= 1; dx++)
+                var j = 0;
+                while (j < xmas.Length)
                 {
-                    if (dy == 0 && dx == 0)
-                        continue;
-                    
-                    var index1 = i + 0 * (dx + dy * rowLength);
-                    var index2 = i + 1 * (dx + dy * rowLength);
-                    var index3 = i + 2 * (dx + dy * rowLength);
-                    var index4 = i + 3 * (dx + dy * rowLength);
-                    
-                    if (index1 >= 0 && index1 < Input.Length && Input[index1] == 'X' &&
-                        index2 >= 0 && index2 < Input.Length && Input[index2] == 'M' &&
-                        index3 >= 0 && index3 < Input.Length && Input[index3] == 'A' &&
-                        index4 >= 0 && index4 < Input.Length && Input[index4] == 'S')
+                    var index = i + direction * j;
+                    if (index < 0 || index >= Input.Length || Input[index] != xmas[j])
                     {
-                        res++;
+                        break;
                     }
+
+                    j++;
+                }
+
+                if (j == xmas.Length)
+                {
+                    res++;
                 }
             }
         }
