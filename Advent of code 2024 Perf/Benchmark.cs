@@ -9,6 +9,7 @@ public class Benchmark
     private readonly SolutionDay1 _solutionDay1 = new();
     private readonly SolutionDay2 _solutionDay2 = new();
     private readonly SolutionDay3 _solutionDay3 = new();
+    private readonly SolutionDay3 _solutionDay4 = new();
     
     [Benchmark]
     public string Day1Part1() => _solutionDay1.Part1Solver();
@@ -28,5 +29,9 @@ public class Benchmark
     [Benchmark]
     public string Day3Part2() => _solutionDay3.Part2Solver();
     
-   
+    [Benchmark]
+    public string Day4Part1() => _solutionDay4.Part1Solver();
+    
+    [Benchmark]
+    public string Day4Part2() => _solutionDay4.Part2Solver();
 }
