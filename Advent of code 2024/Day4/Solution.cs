@@ -5,29 +5,31 @@ public class SolutionDay4() : SolutionBase(4)
     public override string Part1Solver()
     {
         var m = Input.IndexOf(Environment.NewLine, StringComparison.Ordinal);
+        var rowLength = m + Environment.NewLine.Length;
+
         Span<char> xmas = ['X', 'M', 'A', 'S'];
         Span<int> directions = 
         [
-            -m - Environment.NewLine.Length - 1, -m - Environment.NewLine.Length, -m - Environment.NewLine.Length + 1,
+            -rowLength - 1, -rowLength, -rowLength + 1,
             -1, 1,
-            m + Environment.NewLine.Length - 1, m + Environment.NewLine.Length, m + Environment.NewLine.Length + 1
+            rowLength - 1, rowLength, rowLength + 1
         ];
         var res = 0;
         for (var i = 0; i < Input.Length; i++)
         {
             foreach (var direction in directions)
             {
-                var j = 0;
-                while (j < xmas.Length)
+                int j;
+                for (j = 0; j < xmas.Length; j++)
                 {
                     var index = i + direction * j;
+                    
                     if (index < 0 || index >= Input.Length || Input[index] != xmas[j])
                     {
                         break;
                     }
-
-                    j++;
                 }
+
 
                 if (j == xmas.Length)
                 {
@@ -47,15 +49,14 @@ public class SolutionDay4() : SolutionBase(4)
         for (var i = rowLength; i < Input.Length - rowLength; i++)
         {
             if (Input[i] != 'A') continue;
+            
+            var topLeft = i - rowLength - 1;
+            var topRight = i - rowLength + 1;
+            var bottomLeft = i + rowLength - 1;
+            var bottomRight = i + rowLength + 1;
 
-            if ((Input[i - rowLength - 1] != 'M' ||
-                 Input[i + rowLength + 1] != 'S') &&
-                (Input[i - rowLength - 1] != 'S' ||
-                 Input[i + rowLength + 1] != 'M') ||
-                (Input[i - rowLength + 1] != 'M' ||
-                 Input[i + rowLength - 1] != 'S') &&
-                (Input[i - rowLength + 1] != 'S' ||
-                 Input[i + rowLength - 1] != 'M'))
+            if ((Input[topLeft] ^ Input[bottomRight]) == ('M' ^ 'S') ||
+                (Input[topRight] ^ Input[bottomLeft]) == ('M' ^ 'S'))
             {
                 continue;
             }
