@@ -1,5 +1,5 @@
 ﻿using Advent_of_code_2024;
 
-var solution = new SolutionDay5();
+var solution = new SolutionDay9();
 
-Console.WriteLine(solution.Part1Solver());
+Console.WriteLine(solution.Part2Solver());
