@@ -4,17 +4,16 @@ public class SolutionDay9() : SolutionBase(9)
 {
     public override string Part1Solver()
     {
-        var inputSpan = Input.AsSpan();
         var blocks = new List<long?>();
         var isFile = true;
         var id = 0;
-        foreach (var numChar in inputSpan)
+        foreach (var num in Input.Select(numChar => numChar - '0'))
         {
-            var num = numChar - '0';
             for (var i = 0; i < num; i++)
             {
                 blocks.Add(isFile ? id : null);
             }
+
             if (isFile)
             {
                 id++;
@@ -25,24 +24,25 @@ public class SolutionDay9() : SolutionBase(9)
 
         var freeSpace = 0;
         var fileBlock = blocks.Count - 1;
-
         while (freeSpace < fileBlock)
         {
-            while (blocks[freeSpace] != null)
+            while (freeSpace < blocks.Count && blocks[freeSpace] != null)
             {
-                freeSpace += 1;
+                freeSpace++;
             }
 
-            while (blocks[fileBlock] == null)
+            while (fileBlock >= 0 && blocks[fileBlock] == null)
             {
-                fileBlock -= 1;
+                fileBlock--;
             }
 
+            if (freeSpace >= fileBlock) break;
             blocks[freeSpace] = blocks[fileBlock];
             blocks[fileBlock] = null;
         }
 
         var sum = 0L;
+
         for (var i = 0; i < blocks.Count; i++)
         {
             if (blocks[i].HasValue)
@@ -50,34 +50,25 @@ public class SolutionDay9() : SolutionBase(9)
                 sum += blocks[i]!.Value * i;
             }
         }
-        
+
         return sum.ToString();
     }
 
     public override string Part2Solver()
     {
-        var inputSpan = Input.AsSpan();
         var blocks = new List<long?>();
         var isFile = true;
         var id = 0;
-        foreach (var numChar in inputSpan)
+        foreach (var num in Input.Select(numChar => numChar - '0'))
         {
-            var num = numChar - '0';
+            for (var i = 0; i < num; i++)
+            {
+                blocks.Add(isFile ? id : null);
+            }
+
             if (isFile)
             {
-                for (var i = 0; i < num; i++)
-                {
-                    blocks.Add(id);
-                }
-
                 id++;
-            }
-            else
-            {
-                for (var i = 0; i < num; i++)
-                {
-                    blocks.Add(null);
-                }
             }
 
             isFile = !isFile;
@@ -85,61 +76,68 @@ public class SolutionDay9() : SolutionBase(9)
 
         id--;
         var fileBlock = blocks.Count - 1;
-        
+
         while (id >= 0)
         {
             while (fileBlock > 0 && blocks[fileBlock] != id)
             {
-                fileBlock -= 1;
+                fileBlock--;
             }
-
-            var file = blocks[fileBlock];
+            
             var fileLength = 0;
-            while (fileBlock - fileLength > 0 && blocks[fileBlock - fileLength] == file)
+            while (fileBlock - fileLength > 0 && blocks[fileBlock - fileLength] == id)
             {
                 fileLength++;
             }
 
             var freeSpaceLength = 0;
-
             var left = 0;
+            var freeSpaceStart = -1;
+
             for (var right = 0; right < fileBlock - fileLength + 1; right++)
             {
                 if (blocks[right] == null)
                 {
                     freeSpaceLength++;
                 }
-                
+
                 if (right - left + 1 > fileLength)
                 {
                     if (blocks[left] == null)
                     {
                         freeSpaceLength--;
                     }
+
                     left++;
                 }
-                
-                if (freeSpaceLength == fileLength)
-                {
-                    break;
-                }
 
+                if (freeSpaceLength != fileLength) continue;
+                freeSpaceStart = left;
+                break;
             }
 
-            if (freeSpaceLength == fileLength)
+            if (freeSpaceStart != -1)
             {
                 for (var i = 0; i < fileLength; i++)
                 {
-                    blocks[left + i] = file;
+                    blocks[left + i] = id;
                     blocks[fileBlock - i] = null;
                 }
             }
-            id--;
-            
-        }
-        
-        var sum = blocks.Select((b, i) => (b, i)).Sum(b => b.b == null ? 0 : b.b * b.i);
 
-        return sum.ToString()!;
+            id--;
+        }
+
+        var sum = 0L;
+
+        for (var i = 0; i < blocks.Count; i++)
+        {
+            if (blocks[i].HasValue)
+            {
+                sum += blocks[i]!.Value * i;
+            }
+        }
+
+        return sum.ToString();
     }
 }
