@@ -11,21 +11,13 @@ public class SolutionDay9() : SolutionBase(9)
         foreach (var numChar in inputSpan)
         {
             var num = numChar - '0';
+            for (var i = 0; i < num; i++)
+            {
+                blocks.Add(isFile ? id : null);
+            }
             if (isFile)
             {
-                for (var i = 0; i < num; i++)
-                {
-                    blocks.Add(id);
-                }
-
                 id++;
-            }
-            else
-            {
-                for (var i = 0; i < num; i++)
-                {
-                    blocks.Add(null);
-                }
             }
 
             isFile = !isFile;
@@ -50,9 +42,16 @@ public class SolutionDay9() : SolutionBase(9)
             blocks[fileBlock] = null;
         }
 
-        var sum = blocks.Select((b, i) => (b, i)).Sum(b => b.b == null ? 0 : b.b * b.i);
-
-        return sum.ToString()!;
+        var sum = 0L;
+        for (var i = 0; i < blocks.Count; i++)
+        {
+            if (blocks[i].HasValue)
+            {
+                sum += blocks[i]!.Value * i;
+            }
+        }
+        
+        return sum.ToString();
     }
 
     public override string Part2Solver()
