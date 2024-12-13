@@ -38,7 +38,6 @@ public class SolutionDay5() : SolutionBase(5)
         }
         
         var sumOfMiddlePages = 0;
-
         
         foreach (var update in secondSection.EnumerateLines())
         {
