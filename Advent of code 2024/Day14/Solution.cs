@@ -37,8 +37,8 @@ public partial class SolutionDay14() : SolutionBase(14)
                 i++;
             }
 
-            var positionXAfter100 = mod(positionX + velocityX * 100, n);
-            var positionYAfter100 = mod(positionY + velocityY * 100, m);
+            var positionXAfter100 = Mod(positionX + velocityX * 100, n);
+            var positionYAfter100 = Mod(positionY + velocityY * 100, m);
 
             if (positionXAfter100 / ((n - 1) / 2F) == 1 || positionYAfter100 / ((m - 1) / 2F) == 1)
             {
@@ -71,8 +71,9 @@ public partial class SolutionDay14() : SolutionBase(14)
         var res = (long)topLeft * topRight * bottomLeft * bottomRight;
         return res.ToString();
     }
-    int mod(int x, int m) {
-        int r = x%m;
+
+    private static int Mod(int x, int m) {
+        var r = x%m;
         return r<0 ? r+m : r;
     }
 
@@ -114,8 +115,8 @@ public partial class SolutionDay14() : SolutionBase(14)
                     i++;
                 }
 
-                var newPositionX = mod(positionX + velocityX * seconds, n);
-                var newPositionY = mod(positionY + velocityY * seconds, m);
+                var newPositionX = Mod(positionX + velocityX * seconds, n);
+                var newPositionY = Mod(positionY + velocityY * seconds, m);
                 
                 if (set.Add((newPositionX, newPositionY))) continue;
                 overlap = true;
