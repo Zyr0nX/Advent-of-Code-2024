@@ -18,6 +18,10 @@ public class Benchmark
     private readonly SolutionDay9 _solutionDay9 = new();
     private readonly SolutionDay10 _solutionDay10 = new();
     private readonly SolutionDay11 _solutionDay11 = new();
+    private readonly SolutionDay12 _solutionDay12 = new();
+    private readonly SolutionDay13 _solutionDay13 = new();
+    private readonly SolutionDay14 _solutionDay14 = new();
+    private readonly SolutionDay15 _solutionDay15 = new();
     
     // [Benchmark]
     // public string Day1Part1() => _solutionDay1.Part1Solver();
@@ -47,6 +51,9 @@ public class Benchmark
     // public string Day5Part1() => _solutionDay5.Part1Solver();
     //
     // [Benchmark]
+    // public string Day5Part2() => _solutionDay5.Part1Solver();
+    //
+    // [Benchmark]
     // public string Day6Part1() => _solutionDay6.Part1Solver();
     //
     // [Benchmark]
@@ -66,19 +73,43 @@ public class Benchmark
     //
     // [Benchmark]
     // public string Day9Part1() => _solutionDay9.Part1Solver();
-    
+    //
     // [Benchmark]
     // public string Day9Part2() => _solutionDay9.Part2Solver();
-    
+    //
     // [Benchmark]
     // public string Day10Part1() => _solutionDay10.Part1Solver();
     //
     // [Benchmark]
     // public string Day10Part2() => _solutionDay10.Part2Solver();
+    //
+    // [Benchmark]
+    // public string Day11Part1() => _solutionDay11.Part1Solver();
+    //
+    // [Benchmark]
+    // public string Day11Part2() => _solutionDay11.Part2Solver();
+    //
+    // [Benchmark]
+    // public string Day12Part1() => _solutionDay12.Part1Solver();
+    //
+    // [Benchmark]
+    // public string Day12Part2() => _solutionDay12.Part2Solver();
+    //
+    // [Benchmark]
+    // public string Day13Part1() => _solutionDay13.Part1Solver();
+    //
+    // [Benchmark]
+    // public string Day13Part2() => _solutionDay13.Part2Solver();
+    //
+    // [Benchmark]
+    // public string Day14Part1() => _solutionDay14.Part1Solver();
+    //
+    // [Benchmark]
+    // public string Day14Part2() => _solutionDay14.Part2Solver();
     
     [Benchmark]
-    public string Day11Part1() => _solutionDay11.Part1Solver();
+    public string Day15Part1() => _solutionDay15.Part1Solver();
     
     [Benchmark]
-    public string Day11Part2() => _solutionDay11.Part2Solver();
+    public string Day15Part2() => _solutionDay15.Part2Solver();
 }

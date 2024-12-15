@@ -4,7 +4,7 @@ public class SolutionDay1() : SolutionBase(1)
 {
     public override string Part1Solver()
     {
-        const int n = 1000;
+        var n = Input.AsSpan().Count($"{Environment.NewLine}") + 1;
         var leftList = new int[n];
         var rightList = new int[n];
 
@@ -33,7 +33,8 @@ public class SolutionDay1() : SolutionBase(1)
 
     public override string Part2Solver()
     {
-        var rightFreq = new Dictionary<string, int>();
+        var n = Input.AsSpan().Count($"{Environment.NewLine}") + 1;
+        var rightFreq = new Dictionary<string, int>(n);
         var spanRightFreq = rightFreq.GetAlternateLookup<ReadOnlySpan<char>>();
         foreach (var line in Input.AsSpan().EnumerateLines())
         {
