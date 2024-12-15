@@ -2,4 +2,4 @@
 
 var solution = new SolutionDay15();
 
-Console.WriteLine(solution.Part1Solver());
+Console.WriteLine(solution.Part2Solver());
