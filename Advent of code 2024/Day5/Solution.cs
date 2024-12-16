@@ -1,6 +1,4 @@
-﻿using Advent_of_code_2024.Extensions;
-
-namespace Advent_of_code_2024;
+﻿namespace Advent_of_code_2024;
 
 public class SolutionDay5() : SolutionBase(5)
 {
@@ -30,7 +28,7 @@ public class SolutionDay5() : SolutionBase(5)
         foreach (var update in secondSection.EnumerateLines())
         {
             pageIndices.Clear();
-            var pageCount = update.Split(',').Count();
+            var pageCount = update.Count(',') + 1;
             
             var index = 0;
             var middlePage = 0;
@@ -72,8 +70,129 @@ public class SolutionDay5() : SolutionBase(5)
         
         return sumOfMiddlePages.ToString();
     }
+    
+    public string Part1SolverHashSet()
+    {
+        var spanInput = Input.AsSpan();
+        var sectionSeparatorIdx = spanInput.IndexOf($"{Environment.NewLine}{Environment.NewLine}");
+        var firstSection = spanInput[..sectionSeparatorIdx];
+        var secondSection = spanInput[(sectionSeparatorIdx + Environment.NewLine.Length * 2)..];
+
+        var rules = new HashSet<(int, int)>();
+        
+        foreach (var rule in firstSection.EnumerateLines())
+        {
+            var separatorIndex = rule.IndexOf('|');
+
+            var firstNumber = int.Parse(rule[..separatorIndex]);
+            var secondNumber = int.Parse(rule[(separatorIndex + 1)..]);
+            rules.Add((firstNumber, secondNumber));
+        }
+        
+        var sumOfMiddlePages = 0;
+        
+        foreach (var update in secondSection.EnumerateLines())
+        {
+            var pageCount = update.Count(',') + 1;
+            var i = 0;
+            var middlePage = 0;
+            var valid = true;
+            var prevPage = -1;
+            foreach (var pageRange in update.Split(','))
+            {
+                var page = int.Parse(update[pageRange]);
+                
+                if (i == pageCount / 2)
+                    middlePage = page;
+
+                if (rules.Contains((page, prevPage)))
+                {
+                    valid = false;
+                    break;
+                    
+                };
+                prevPage = page;
+                i++;
+
+            }
+
+            if (valid)
+            {
+                sumOfMiddlePages += middlePage;
+            }
+
+        }
+        
+        return sumOfMiddlePages.ToString();
+    }
 
     public override string Part2Solver()
+    {
+        var spanInput = Input.AsSpan();
+        var sectionSeparatorIdx = spanInput.IndexOf($"{Environment.NewLine}{Environment.NewLine}");
+        var firstSection = spanInput[..sectionSeparatorIdx];
+        var secondSection = spanInput[(sectionSeparatorIdx + Environment.NewLine.Length * 2)..];
+
+        var rules = new HashSet<(int, int)>();
+        
+        foreach (var rule in firstSection.EnumerateLines())
+        {
+            var separatorIndex = rule.IndexOf('|');
+
+            var firstNumber = int.Parse(rule[..separatorIndex]);
+            var secondNumber = int.Parse(rule[(separatorIndex + 1)..]);
+            rules.Add((firstNumber, secondNumber));
+        }
+        
+        var sumOfMiddlePages = 0;
+        
+        foreach (var update in secondSection.EnumerateLines())
+        {
+            var pageCount = update.Count(',') + 1;
+            var pages = new int[pageCount];
+
+            var i = 0;
+            var prevPage = -1;
+            
+            foreach (var pageRange in update.Split(','))
+            {
+                var page = int.Parse(update[pageRange]);
+                pages[i] = page;
+                i++;
+            }
+
+            i = 0;
+            foreach (var pageRange in update.Split(','))
+            {
+                var page = int.Parse(update[pageRange]);
+                
+                if (rules.Contains((page, prevPage)))
+                {
+                    Array.Sort(pages, (a, b) =>
+                    {
+                        if (rules.Contains((a, b)))
+                            return -1;
+                        if (rules.Contains((b, a)))
+                            return 1;
+                        return 0;
+                    });
+                    
+                    var middlePageIndex = pages.Length / 2;
+                    sumOfMiddlePages += pages[middlePageIndex];
+                    break;
+                    
+                };
+                
+                prevPage = page;
+                pages[i] = page;
+                i++;
+            }
+        }
+        
+        return sumOfMiddlePages.ToString();
+    }
+    
+    public string Part2SolverHashSet()
     {
         var spanInput = Input.AsSpan();
         var sectionSeparatorIdx = spanInput.IndexOf($"{Environment.NewLine}{Environment.NewLine}");

@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Advent_of_code_2024;
+﻿namespace Advent_of_code_2024;
 
 public class SolutionDay15() : SolutionBase(15)
 {
@@ -239,8 +237,8 @@ public class SolutionDay15() : SolutionBase(15)
                     moveBoxes.Clear();
                     var wall = false;
                     moveBoxes.Add((robot.Item1 + direction.Item1, robot.Item2 + direction.Item2));
-                    var i = 0;
-                    while (moveBoxes.Count > i)
+                    
+                    for (var i = 0; i < moveBoxes.Count; i++)
                     {
                         var (halfBoxRow, halfBoxCol) = moveBoxes[i];
                         if (map[halfBoxRow + direction.Item1, halfBoxCol + direction.Item2] == '#')
@@ -266,17 +264,14 @@ public class SolutionDay15() : SolutionBase(15)
                         {
                             moveBoxes.Add((halfBoxRow + direction.Item1, halfBoxCol + direction.Item2));
                         }
-
-                        i++;
                     }
 
                     if (!wall)
                     {
-                        moveBoxes.Reverse();
-                        foreach (var box in moveBoxes)
+                        for (var i = moveBoxes.Count - 1; i >= 0; i--)
                         {
-                            map[box.Item1 + direction.Item1, box.Item2 + direction.Item2] = map[box.Item1, box.Item2];
-                            map[box.Item1, box.Item2] = '.';
+                            map[moveBoxes[i].Item1 + direction.Item1, moveBoxes[i].Item2 + direction.Item2] = map[moveBoxes[i].Item1, moveBoxes[i].Item2];
+                            map[moveBoxes[i].Item1, moveBoxes[i].Item2] = '.';
                         }
 
                         (robot.Item1, robot.Item2) = (robot.Item1 + direction.Item1, robot.Item2 + direction.Item2);

@@ -47,6 +47,7 @@ public class SolutionDay1() : SolutionBase(1)
             }
         }
 
+        rightFreq.AsReadOnly();
         var res = 0;
 
         foreach (var line in Input.AsSpan().EnumerateLines())
