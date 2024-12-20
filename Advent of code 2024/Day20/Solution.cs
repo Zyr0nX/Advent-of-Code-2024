@@ -20,7 +20,7 @@ public class SolutionDay20() : SolutionBase(20)
         var start = Input.IndexOf('S');
         var end = Input.IndexOf('E');
         
-        var visited = new Dictionary<int, int>(m * n - o);
+        var visited = new Dictionary<int, int>(m * n - o) { { start, 0 } };
         var current = start;
         var time = 0;
         while (current != end)
@@ -96,7 +96,7 @@ public class SolutionDay20() : SolutionBase(20)
         var start = Input.IndexOf('S');
         var end = Input.IndexOf('E');
 
-        var visited = new Dictionary<int, int>(m * n - o);
+        var visited = new Dictionary<int, int>(m * n - o) { { start, 0 } };
         var current = start;
         var time = 0;
         while (current != end)
