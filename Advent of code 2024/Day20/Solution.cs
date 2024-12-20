@@ -19,32 +19,26 @@ public class SolutionDay20() : SolutionBase(20)
 
         var start = Input.IndexOf('S');
         var end = Input.IndexOf('E');
-
-        var stack = new Stack<int>((m - 1) * (n / 2) + 1 - o / 2);
+        
         var visited = new Dictionary<int, int>(m * n - o);
-        stack.Push(start);
-        visited.Add(start, 0);
-        while (stack.TryPop(out var idx))
+        var current = start;
+        var time = 0;
+        while (current != end)
         {
-            var time = visited[idx];
-            if (idx == end)
-            {
-                continue;
-            }
-
             foreach (var direction in directions)
             {
-                var newIdx = idx + direction;
+                var newIdx = current + direction;
                 if (newIdx < 0 ||
                     newIdx > Input.Length - 1 ||
                     newIdx % rowLength > m ||
                     Input[newIdx] == '#' ||
-                    !visited.TryAdd(newIdx, time + 1))
+                    !visited.TryAdd(newIdx, time))
                 {
                     continue;
                 }
-
-                stack.Push(newIdx);
+                current = newIdx;
+                time++;
+                break;
             }
         }
 
@@ -102,32 +96,25 @@ public class SolutionDay20() : SolutionBase(20)
         var start = Input.IndexOf('S');
         var end = Input.IndexOf('E');
 
-        var stack = new Stack<int>((m - 1) * n / 2 + 1 - o / 2);
         var visited = new Dictionary<int, int>(m * n - o);
-
-        stack.Push(start);
-        visited.Add(start, 0);
-        while (stack.TryPop(out var idx))
+        var current = start;
+        var time = 0;
+        while (current != end)
         {
-            var time = visited[idx];
-            if (idx == end)
-            {
-                continue;
-            }
-
             foreach (var direction in directions)
             {
-                var newIdx = idx + direction;
+                var newIdx = current + direction;
                 if (newIdx < 0 ||
                     newIdx > Input.Length - 1 ||
                     newIdx % rowLength > m ||
                     Input[newIdx] == '#' ||
-                    !visited.TryAdd(newIdx, time + 1))
+                    !visited.TryAdd(newIdx, time))
                 {
                     continue;
                 }
-
-                stack.Push(newIdx);
+                current = newIdx;
+                time++;
+                break;
             }
         }
 
